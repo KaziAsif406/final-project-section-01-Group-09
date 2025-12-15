@@ -4,6 +4,8 @@ import 'package:ttt/firebase_options.dart';
 import 'screens/home_screen.dart';
 
 void main() async {
+  // Firebase initialization
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
