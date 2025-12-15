@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/game_state.dart';
+import '../state_control/game_state.dart';
 import 'home_screen.dart';
 import 'player_names_screen.dart';
 
