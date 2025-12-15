@@ -180,7 +180,7 @@ class _PlayerNamesScreenState extends State<PlayerNamesScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
+      ),
+    );
+  }
 }
