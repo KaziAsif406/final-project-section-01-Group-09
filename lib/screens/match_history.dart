@@ -59,11 +59,11 @@ class MatchHistoryScreen extends StatelessWidget {
 
   // A small selection of pastel colors to style each card differently
   final List<Color> _pastelColors = const [
-    Color.fromARGB(255, 246, 170, 181), // soft pink
-    Color.fromARGB(255, 160, 202, 244), // soft blue
-    Color.fromARGB(255, 240, 216, 165), // soft peach
-    Color.fromARGB(255, 183, 244, 161), // soft mint
-    Color.fromARGB(255, 209, 171, 243), // soft lavender
+    Color.fromARGB(255, 246, 170, 181),
+    Color.fromARGB(255, 160, 202, 244),
+    Color.fromARGB(255, 240, 216, 165),
+    Color.fromARGB(255, 183, 244, 161),
+    Color.fromARGB(255, 209, 171, 243),
   ];
 
   Widget _buildBoardGrid(List<String> board, {List<int>? winningCombo}) {
@@ -71,12 +71,7 @@ class MatchHistoryScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(
-          255,
-          172,
-          221,
-          251,
-        ), // subtle preview background
+        color: const Color.fromARGB(255, 172, 221, 251),
         borderRadius: BorderRadius.circular(8),
       ),
       child: SizedBox(
@@ -134,7 +129,7 @@ class MatchHistoryScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: const Color.fromARGB(255, 227, 233, 236), // pastel background
+        color: const Color.fromARGB(255, 227, 233, 236),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [

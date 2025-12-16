@@ -147,7 +147,6 @@ class _PlayerNamesScreenState extends State<PlayerNamesScreen> {
                       onSubmitted: (_) => _startGame(),
                     ),
                     const SizedBox(height: 16),
-                    // Timer selection (styled like the name input boxes)
                     Row(
                       children: [
                         Expanded(

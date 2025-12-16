@@ -119,7 +119,7 @@ class GameState extends ChangeNotifier {
     if (board.every((cell) => cell.isNotEmpty)) {
       gameOver = true;
       gameResult = "It's a tie!";
-      // Save match to Firestore with 'Tie' winner
+      // Save match to Firestore
       _saveMatchToFirestore('Tie');
       // stop timer
       _stopTurnTimer();
