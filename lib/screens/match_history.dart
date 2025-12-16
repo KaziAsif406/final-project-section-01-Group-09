@@ -73,9 +73,9 @@ class MatchHistoryScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color.fromARGB(
           255,
-          209,
-          231,
-          245,
+          172,
+          221,
+          251,
         ), // subtle preview background
         borderRadius: BorderRadius.circular(8),
       ),
@@ -120,7 +120,12 @@ class MatchHistoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Match History'),
-        backgroundColor: const Color.fromARGB(255, 222, 178, 251),
+        titleTextStyle: TextStyle(
+          color: const Color.fromARGB(221, 83, 94, 98),
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+        ),
+        backgroundColor: const Color.fromARGB(255, 174, 198, 207),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -129,7 +134,7 @@ class MatchHistoryScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: const Color.fromARGB(255, 246, 245, 246), // pastel background
+        color: const Color.fromARGB(255, 227, 233, 236), // pastel background
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -380,20 +385,14 @@ class MatchHistoryScreen extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                    ),
-                    child: const Text('Back'),
-                  ),
-                ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 2),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => _clearHistory(context),
                     child: const Text('Clear History'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 134, 158, 170),
+                    ),
                   ),
                 ),
               ],

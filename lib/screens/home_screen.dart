@@ -160,6 +160,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ElevatedButton.icon(
                             icon: const Icon(Icons.people),
                             label: const Text('PLAY'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                215,
+                                124,
+                                159,
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
