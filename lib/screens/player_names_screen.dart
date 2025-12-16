@@ -16,7 +16,8 @@ class PlayerNamesScreen extends StatefulWidget {
 class _PlayerNamesScreenState extends State<PlayerNamesScreen> {
   final TextEditingController _player1NameController = TextEditingController();
   final TextEditingController _player2NameController = TextEditingController();
-  // Timer option removed for now.
+  int _turnDurationSeconds = 0; // 0 = off
+  final List<int> _timerOptions = [0, 5, 10, 15, 30, 60];
 
   @override
   void dispose() {
@@ -42,6 +43,7 @@ class _PlayerNamesScreenState extends State<PlayerNamesScreen> {
             player2Name: player2Name,
             boardSize: widget.boardSize,
             winLength: widget.winLength,
+            turnDurationSeconds: _turnDurationSeconds,
           ),
           child: GameBoardScreen(),
         ),
@@ -145,7 +147,60 @@ class _PlayerNamesScreenState extends State<PlayerNamesScreen> {
                       onSubmitted: (_) => _startGame(),
                     ),
                     const SizedBox(height: 16),
-
+                    // Timer selection (styled like the name input boxes)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white.withOpacity(0.9),
+                              labelText: 'Per-turn timer',
+                              prefixIcon: const Icon(
+                                Icons.timer,
+                                color: Color(0xFF9B88C4),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                  color: Color(0xFFD4C5F9),
+                                  width: 2,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                  color: Color(0xFF9B88C4),
+                                  width: 2,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 12,
+                              ),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<int>(
+                                value: _turnDurationSeconds,
+                                isExpanded: true,
+                                items: _timerOptions
+                                    .map(
+                                      (s) => DropdownMenuItem<int>(
+                                        value: s,
+                                        child: Text(s == 0 ? 'Off' : '${s}s'),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (v) {
+                                  if (v == null) return;
+                                  setState(() => _turnDurationSeconds = v);
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 20),
                     const SizedBox(height: 32),
                     SizedBox(

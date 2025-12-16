@@ -58,7 +58,40 @@ class _GameBoardScreenState extends State<GameBoardScreen> {
                           'Playing as: ${state.isPlayer1Turn ? 'X' : 'O'}',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 8),
+                        if (state.turnDurationSeconds > 0) ...[
+                          SizedBox(
+                            width: 160,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Time left: ${state.remainingTime}s',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: LinearProgressIndicator(
+                                    value: state.turnDurationSeconds > 0
+                                        ? state.remainingTime /
+                                              state.turnDurationSeconds
+                                        : 0,
+                                    minHeight: 6,
+                                    backgroundColor: Colors.white70,
+                                    valueColor: AlwaysStoppedAnimation(
+                                      state.isPlayer1Turn
+                                          ? Colors.indigo.shade400
+                                          : Colors.redAccent.shade400,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                        ],
                       ] else ...[
                         Text(
                           state.gameResult,
