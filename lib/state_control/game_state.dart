@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +8,7 @@ class GameState extends ChangeNotifier {
   final String player2Name;
   final int boardSize;
   final int winLength;
-  // Timer removed for now; reintroduce later if needed.
+  final int turnDurationSeconds; // per-turn timer seconds (0 = off)
 
   late List<String> board;
   bool isPlayer1Turn = true;
@@ -14,14 +16,16 @@ class GameState extends ChangeNotifier {
   String gameResult = '';
   List<int> winningCombo = [];
 
-  // Timer-related fields removed.
+  // Timer-related fields
+  int _timeLeft = 0;
+  Timer? _turnTimer;
 
   GameState({
     required this.player1Name,
     required this.player2Name,
     this.boardSize = 3,
     this.winLength = 3,
-    // turnDurationSeconds removed
+    this.turnDurationSeconds = 0,
   }) {
     _initializeGame();
   }
@@ -32,7 +36,8 @@ class GameState extends ChangeNotifier {
     gameOver = false;
     gameResult = '';
     winningCombo = [];
-    // Timer init removed
+    _timeLeft = turnDurationSeconds;
+    _startTurnTimerIfNeeded();
     notifyListeners();
   }
 
@@ -43,6 +48,12 @@ class GameState extends ChangeNotifier {
 
     if (!gameOver) {
       isPlayer1Turn = !isPlayer1Turn;
+      // reset timer for next player
+      _timeLeft = turnDurationSeconds;
+      _startTurnTimerIfNeeded();
+    } else {
+      // stop timer when game ends
+      _stopTurnTimer();
     }
 
     notifyListeners();
@@ -100,7 +111,8 @@ class GameState extends ChangeNotifier {
       gameResult = '$name wins!';
       // Save match to Firestore
       _saveMatchToFirestore(name);
-      // Timer cancelled when active (removed)
+      // stop timer
+      _stopTurnTimer();
       return;
     }
 
@@ -109,7 +121,8 @@ class GameState extends ChangeNotifier {
       gameResult = "It's a tie!";
       // Save match to Firestore with 'Tie' winner
       _saveMatchToFirestore('Tie');
-      // Timer cancelled when active (removed)
+      // stop timer
+      _stopTurnTimer();
     }
   }
 
@@ -124,6 +137,7 @@ class GameState extends ChangeNotifier {
         'winLength': winLength,
         'boardSize': boardSize,
         'winningCombo': winningCombo,
+        'turnDurationSeconds': turnDurationSeconds,
       };
       await FirebaseFirestore.instance.collection('matches').add(data);
     } catch (e) {
@@ -133,16 +147,47 @@ class GameState extends ChangeNotifier {
 
   void resetGame() {
     _initializeGame();
+    notifyListeners();
+  }
+
+  int get remainingTime => _timeLeft;
+
+  void _startTurnTimerIfNeeded() {
+    _stopTurnTimer();
+    if (turnDurationSeconds <= 0) return;
+    _turnTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (gameOver) return;
+      if (_timeLeft > 0) {
+        _timeLeft -= 1;
+        notifyListeners();
+      }
+      if (_timeLeft <= 0) {
+        // time up: transfer turn
+        if (!gameOver) {
+          isPlayer1Turn = !isPlayer1Turn;
+          _timeLeft = turnDurationSeconds;
+          notifyListeners();
+        }
+      }
+    });
+  }
+
+  void _stopTurnTimer() {
+    _turnTimer?.cancel();
+    _turnTimer = null;
   }
 
   void switchStartingPlayer() {
     isPlayer1Turn = !isPlayer1Turn;
+    // reset timer for the switched player
+    _timeLeft = turnDurationSeconds;
+    _startTurnTimerIfNeeded();
     notifyListeners();
   }
 
   @override
   void dispose() {
-    // Timer cancellation removed
+    _stopTurnTimer();
     super.dispose();
   }
 }
