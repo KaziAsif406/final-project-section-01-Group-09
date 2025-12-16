@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../state_control/game_state.dart';
 import 'home_screen.dart';
 import 'player_names_screen.dart';
+import 'match_history.dart';
 
 class GameBoardScreen extends StatefulWidget {
   const GameBoardScreen({super.key});
@@ -272,6 +273,27 @@ class _GameBoardScreenState extends State<GameBoardScreen> {
                   backgroundColor: const Color.fromARGB(255, 248, 217, 125),
                   tooltip: 'Switch Starting Player',
                   child: const Icon(Icons.swap_horiz),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            AnimatedOpacity(
+              opacity: _showSettingsMenu ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 300),
+              child: ScaleTransition(
+                scale: AlwaysStoppedAnimation(_showSettingsMenu ? 1.0 : 0.0),
+                child: FloatingActionButton.small(
+                  onPressed: () {
+                    _toggleSettingsMenu();
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MatchHistoryScreen(),
+                      ),
+                    );
+                  },
+                  backgroundColor: const Color.fromARGB(255, 135, 206, 250),
+                  tooltip: 'Match History',
+                  child: const Icon(Icons.history),
                 ),
               ),
             ),
