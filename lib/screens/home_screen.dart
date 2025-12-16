@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             DropdownButton<int>(
                               value: _winLength,
                               items: (_boardSize >= 5)
-                                  ? [4, 5]
+                                  ? [3, 4, 5]
                                         .map(
                                           (e) => DropdownMenuItem(
                                             value: e,
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                         .toList()
                                   : (_boardSize == 4)
-                                  ? [4]
+                                  ? [3, 4]
                                         .map(
                                           (e) => DropdownMenuItem(
                                             value: e,
