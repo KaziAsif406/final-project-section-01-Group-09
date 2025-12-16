@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class GameState extends ChangeNotifier {
@@ -97,6 +98,8 @@ class GameState extends ChangeNotifier {
       gameOver = true;
       final name = winner == 'X' ? player1Name : player2Name;
       gameResult = '$name wins!';
+      // Save match to Firestore
+      _saveMatchToFirestore(name);
       // Timer cancelled when active (removed)
       return;
     }
@@ -104,7 +107,24 @@ class GameState extends ChangeNotifier {
     if (board.every((cell) => cell.isNotEmpty)) {
       gameOver = true;
       gameResult = "It's a tie!";
+      // Save match to Firestore with 'Tie' winner
+      _saveMatchToFirestore('Tie');
       // Timer cancelled when active (removed)
+    }
+  }
+
+  Future<void> _saveMatchToFirestore(String winnerName) async {
+    try {
+      final data = {
+        'winner': winnerName,
+        'player1': player1Name,
+        'player2': player2Name,
+        'board': board.map((b) => b.isEmpty ? '0' : b).toList(),
+        'date': FieldValue.serverTimestamp(),
+      };
+      await FirebaseFirestore.instance.collection('matches').add(data);
+    } catch (e) {
+      // Swallow errors for now; optionally handle/log
     }
   }
 
