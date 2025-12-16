@@ -37,23 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: const Text(''),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            tooltip: 'Match History',
-            icon: const Icon(Icons.history),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const MatchHistoryScreen()),
-              );
-            },
-          ),
-        ],
-      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -71,8 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Card(
-                  color:
-                      const Color.fromARGB(255, 255, 255, 255).withOpacity(0.95),
+                  color: const Color.fromARGB(
+                    255,
+                    255,
+                    255,
+                    255,
+                  ).withOpacity(0.95),
                   elevation: 10,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -89,9 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           'Tic Tac Toe',
                           style: Theme.of(context).textTheme.headlineLarge
                               ?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: const Color(0xFF880E4F),
-                          ),
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF880E4F),
+                              ),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -137,30 +124,30 @@ class _HomeScreenState extends State<HomeScreen> {
                               value: _winLength,
                               items: (_boardSize >= 5)
                                   ? [4, 5]
-                                      .map(
-                                        (e) => DropdownMenuItem(
-                                          value: e,
-                                          child: Text('Connect $e'),
-                                        ),
-                                      )
-                                      .toList()
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text('Connect $e'),
+                                          ),
+                                        )
+                                        .toList()
                                   : (_boardSize == 4)
-                                      ? [4]
-                                          .map(
-                                            (e) => DropdownMenuItem(
-                                              value: e,
-                                              child: Text('Connect $e'),
-                                            ),
-                                          )
-                                          .toList()
-                                      : [3]
-                                          .map(
-                                            (e) => DropdownMenuItem(
-                                              value: e,
-                                              child: Text('Connect $e'),
-                                            ),
-                                          )
-                                          .toList(),
+                                  ? [4]
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text('Connect $e'),
+                                          ),
+                                        )
+                                        .toList()
+                                  : [3]
+                                        .map(
+                                          (e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text('Connect $e'),
+                                          ),
+                                        )
+                                        .toList(),
                               onChanged: (v) {
                                 if (v != null) _onWinLengthChanged(v);
                               },
