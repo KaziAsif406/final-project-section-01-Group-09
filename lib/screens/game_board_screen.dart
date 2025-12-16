@@ -61,13 +61,14 @@ class _GameBoardScreenState extends State<GameBoardScreen> {
                         const SizedBox(height: 8),
                         if (state.turnDurationSeconds > 0) ...[
                           SizedBox(
-                            width: 160,
+                            width: 250,
                             child: Column(
                               children: [
                                 Text(
-                                  'Time left: ${state.remainingTime}s',
+                                  '${state.remainingTime}s',
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 const SizedBox(height: 6),
@@ -82,8 +83,18 @@ class _GameBoardScreenState extends State<GameBoardScreen> {
                                     backgroundColor: Colors.white70,
                                     valueColor: AlwaysStoppedAnimation(
                                       state.isPlayer1Turn
-                                          ? Colors.indigo.shade400
-                                          : Colors.redAccent.shade400,
+                                          ? const Color.fromARGB(
+                                              255,
+                                              78,
+                                              90,
+                                              160,
+                                            )
+                                          : const Color.fromARGB(
+                                              255,
+                                              202,
+                                              76,
+                                              76,
+                                            ),
                                     ),
                                   ),
                                 ),
