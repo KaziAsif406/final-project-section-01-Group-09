@@ -121,6 +121,9 @@ class GameState extends ChangeNotifier {
         'player2': player2Name,
         'board': board.map((b) => b.isEmpty ? '0' : b).toList(),
         'date': FieldValue.serverTimestamp(),
+        'winLength': winLength,
+        'boardSize': boardSize,
+        'winningCombo': winningCombo,
       };
       await FirebaseFirestore.instance.collection('matches').add(data);
     } catch (e) {
